@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Form Validation</title>
+	<style type="text/css">
+		.hidden{
+		   visibility:hidden;
+		}
+	</style>
+	<script type="text/javascript">
+		function validateForm()
+		{
+			var passwordValue = document.getElementById("pass").value;
+			var retypePasswordValue = document.getElementById("retypePassword").value;
+			var ipAddressValue = document.getElementById("ipAddress").value;
+			var emailValue = document.getElementById("emailAddress").value;
+			var phoneNumberValue = document.getElementById("phoneNumber").value;
+
+			var ipLengthValidation = ipAddress.value.length - 1 >= 15 || ipAddress.value.length <= 0;
+			var ipAddressContentValidation = ipAddress.value.match(/^[0-9.]+$/);
+
+			var passwordSameValidation = retypePasswordValue == passwordValue;
+			var passwordNullValidation = passwordValue.length == 0;
+
+			var emailFirstIndexOfAt = emailValue.indexOf('@');
+			var emailLastIndexOfAt = emailValue.lastIndexOf('@');
+			var emailLength = emailValue.length;
+			var emailDotValidation = emailValue.lastIndexOf('.');
+			var emailAtAndDotValidation = emailValue.substring(emailFirstIndexOfAt, emailDotValidation);
+
+
+			var phoneNumberPattern = isNaN(phoneNumberValue);
+
+			if(ipLengthValidation)
+			{
+				ipLabel.innerHTML = "INVALID LENGTH";
+				ipAddress.focus();
+				return false;
+			}
+			ipLabel.innerHTML = "";
+			if(!ipAddressContentValidation)
+			{
+				ipLabel.innerHTML = "INVALID FORMAT";
+				ipAddress.focus();
+				return false;	
+			}
+			ipLabel.innerHTML = "";
+
+			if(emailLength <= 1)
+			{
+				emailLabel.innerHTML = "INVALID EMAIL LENGTH";
+				emailAddress.focus();
+				return false;	
+			}
+			emailLabel.innerHTML = "";
+			if(emailFirstIndexOfAt != emailLastIndexOfAt)
+			{
+				emailLabel.innerHTML = "INVALID EMAIL SYNTAX";
+				emailAddress.focus();
+				return false;
+			}
+			emailLabel.innerHTML = "";
+			if(emailDotValidation - 1 == emailLastIndexOfAt)
+			{
+				emailLabel.innerHTML = "INVALID EMAIL DOT";
+				emailAddress.focus();
+				return false;
+			}
+			emailLabel.innerHTML = "";
+			if(emailAtAndDotValidation.length <= 1)
+			{
+				emailLabel.innerHTML = "INVALID EMAIL DOT";
+				emailAddress.focus();
+				return false;	
+			}
+			emailLabel.innerHTML = "";
+			
+			if(phoneNumberPattern)
+			{
+				phoneNumberLabel.innerHTML = "SHOULD BE IN DIGTS ONLY";
+				phoneNumber.focus();
+				return false;
+			}
+			phoneNumberLabel.innerHTML = "";
+			if(phoneNumberValue.length == 0 || phoneNumberValue.length < 10 || phoneNumberValue.length > 10)
+			{
+				phoneNumberLabel.innerHTML = "SHOULD BE > 0 AND < 10";
+				phoneNumber.focus();
+				return false;
+			}
+			phoneNumberLabel.innerHTML = "";
+
+			if(passwordNullValidation)
+			{
+				passwordLabel.innerHTML = "PASSWORD CANNOT BE NULL";
+				pass.focus();
+				return false;
+			}
+			passwordLabel.innerHTML = "";
+			if(!passwordSameValidation)
+			{
+				retypePasswordLabel.innerHTML = "PASSWORD DONT MATCH";
+				retypePassword.focus();
+				return false;
+			}
+			passwordLabel.innerHTML = "";
+			
+			
+
+		}
+	</script>
+</head>
+<body>
+	 <form id="myForm">
+	 	 <fieldset>
+    		<legend>Validation</legend>
+		 	<input type="text" placeholder="ip-address" id="ipAddress"><label style="color: red" id="ipLabel"></label><br><br>
+		 	<input type="text" placeholder="email" id="emailAddress"><label style="color: red" id="emailLabel"></label><br><br>
+		 	<input type="text" placeholder="phone-number" id="phoneNumber"><label style="color: red" id="phoneNumberLabel"></label><br><br>
+		 	<input type="password" placeholder="pass" name="pass" id="pass"><label style="color: red" id="passwordLabel"></label><br><br>
+		 	<input type="password" placeholder="retype-pass" name="pass" id="retypePassword"><label style="color: red" id="retypePasswordLabel"></label><br><br>
+		 	<input type="submit" value="Submit Form" onclick="return validateForm()"><br>
+	 	</fieldset>
+	 </form>
+</body>
+</html>
